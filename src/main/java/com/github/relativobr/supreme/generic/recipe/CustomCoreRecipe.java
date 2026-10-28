@@ -1,6 +1,6 @@
 package com.github.relativobr.supreme.generic.recipe;
 
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItemStack;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,7 +40,7 @@ public final class CustomCoreRecipe {
   }
 
   public CustomCoreRecipe(SlimefunItemStack material, Material mainItem, Material secondItem,
-      Material lastItem) {
+                          Material lastItem) {
     this.material = material;
     this.name = material.getItemId();
     this.mainItem = mainItem;
@@ -50,24 +50,24 @@ public final class CustomCoreRecipe {
 
   public static ItemStack[] getRecipe(CustomCoreRecipe customCoreRecipe) {
     return new ItemStack[]{
-        new ItemStack(customCoreRecipe.getMainItem(),
-            customCoreRecipe.getMainItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getMainItem(),
-            customCoreRecipe.getMainItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getMainItem(),
-            customCoreRecipe.getMainItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getSecondItem(),
-            customCoreRecipe.getSecondItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getSecondItem(),
-            customCoreRecipe.getSecondItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getSecondItem(),
-            customCoreRecipe.getSecondItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getLastItem(),
-            customCoreRecipe.getLastItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getLastItem(),
-            customCoreRecipe.getLastItem().getMaxStackSize()),
-        new ItemStack(customCoreRecipe.getLastItem(),
-            customCoreRecipe.getLastItem().getMaxStackSize())
+            new ItemStack(customCoreRecipe.getMainItem(),
+                    customCoreRecipe.getMainItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getMainItem(),
+                    customCoreRecipe.getMainItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getMainItem(),
+                    customCoreRecipe.getMainItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getSecondItem(),
+                    customCoreRecipe.getSecondItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getSecondItem(),
+                    customCoreRecipe.getSecondItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getSecondItem(),
+                    customCoreRecipe.getSecondItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getLastItem(),
+                    customCoreRecipe.getLastItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getLastItem(),
+                    customCoreRecipe.getLastItem().getMaxStackSize()),
+            new ItemStack(customCoreRecipe.getLastItem(),
+                    customCoreRecipe.getLastItem().getMaxStackSize())
     };
   }
 

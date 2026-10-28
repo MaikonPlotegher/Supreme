@@ -5,7 +5,7 @@ import static com.github.relativobr.supreme.Supreme.getSupremeOptions;
 import com.github.relativobr.supreme.Supreme;
 import com.github.relativobr.supreme.machine.tech.TechGenerator;
 import com.github.relativobr.supreme.resource.mobtech.SimpleCard;
-import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import io.github.thebusybiscuit.slimefun5.implementation.SlimefunItems;
 import lombok.experimental.UtilityClass;
 import org.bukkit.Material;
 

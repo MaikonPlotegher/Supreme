@@ -4,18 +4,18 @@ import static java.util.Objects.nonNull;
 
 import com.github.relativobr.supreme.generic.recipe.AbstractItemRecipe;
 import com.github.relativobr.supreme.generic.recipe.InventoryRecipe;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
-import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.attributes.NotHopperable;
-import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockBreakHandler;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.implementation.handlers.SimpleBlockBreakHandler;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
+import io.github.thebusybiscuit.slimefun5.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun5.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun5.core.attributes.NotHopperable;
+import io.github.thebusybiscuit.slimefun5.core.attributes.RecipeDisplayItem;
+import io.github.thebusybiscuit.slimefun5.core.handlers.BlockBreakHandler;
+import io.github.thebusybiscuit.slimefun5.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun5.implementation.handlers.SimpleBlockBreakHandler;
+import io.github.thebusybiscuit.slimefun5.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun5.libraries.dough.protection.Interaction;
+import io.github.thebusybiscuit.slimefun5.utils.ChestMenuUtils;
+import io.github.thebusybiscuit.slimefun5.utils.SlimefunUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -49,7 +49,7 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
 
   @ParametersAreNonnullByDefault
   public GenericMachine(ItemGroup category, SlimefunItemStack item, RecipeType recipeType,
-      ItemStack[] recipe) {
+                        ItemStack[] recipe) {
     super(category, item, recipeType, recipe);
 
     addItemHandler(onBlockBreak());
@@ -58,13 +58,14 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
 
       @Override
       public void init() {
+        optOutOfHeaderItem();
         constructMenu(this);
       }
 
       @Override
       public boolean canOpen(Block b, Player p) {
         return p.hasPermission("slimefun.inventory.bypass") || Slimefun.getProtectionManager()
-            .hasPermission(p, b.getLocation(), Interaction.INTERACT_BLOCK);
+                .hasPermission(p, b.getLocation(), Interaction.INTERACT_BLOCK);
       }
 
       @Override
@@ -77,7 +78,7 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
 
       @Override
       public int[] getSlotsAccessedByItemTransport(DirtyChestMenu menu, ItemTransportFlow flow,
-          ItemStack item) {
+                                                   ItemStack item) {
         if (flow == ItemTransportFlow.WITHDRAW) {
           return getOutputSlots();
         }
@@ -172,23 +173,23 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
   @Override
   protected void constructMenu(BlockMenuPreset preset) {
     for (int i : getBorderSlots()) {
-      preset.addItem(i, new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, " "),
-          ChestMenuUtils.getEmptyClickHandler());
+      preset.addItem(i, CustomItemStack.create(Material.GRAY_STAINED_GLASS_PANE, " "),
+              ChestMenuUtils.getEmptyClickHandler());
     }
 
     for (int i : getInputBorderSlots()) {
-      preset.addItem(i, new CustomItemStack(Material.CYAN_STAINED_GLASS_PANE, " "),
-          ChestMenuUtils.getEmptyClickHandler());
+      preset.addItem(i, CustomItemStack.create(Material.CYAN_STAINED_GLASS_PANE, " "),
+              ChestMenuUtils.getEmptyClickHandler());
     }
 
     for (int i : getOutputBorderSlots()) {
-      preset.addItem(i, new CustomItemStack(Material.ORANGE_STAINED_GLASS_PANE, " "),
-          ChestMenuUtils.getEmptyClickHandler());
+      preset.addItem(i, CustomItemStack.create(Material.ORANGE_STAINED_GLASS_PANE, " "),
+              ChestMenuUtils.getEmptyClickHandler());
     }
 
     preset.addItem(getStatusSlot(),
-        new CustomItemStack(Material.BLACK_STAINED_GLASS_PANE, " "),
-        ChestMenuUtils.getEmptyClickHandler());
+            CustomItemStack.create(Material.BLACK_STAINED_GLASS_PANE, " "),
+            ChestMenuUtils.getEmptyClickHandler());
 
     for (int i : getOutputSlots()) {
       preset.addMenuClickHandler(i, new ChestMenu.AdvancedMenuClickHandler() {
@@ -200,7 +201,7 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
 
         @Override
         public boolean onClick(InventoryClickEvent e, Player p, int slot, ItemStack cursor,
-            ClickAction action) {
+                               ClickAction action) {
           if (cursor == null) {
             return true;
           }
@@ -271,7 +272,7 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
   public List<ItemStack> getDisplayRecipes() {
     List<ItemStack> displayRecipes = new ArrayList();
     machineRecipes.forEach(recipe -> {
-      displayRecipes.add(new CustomItemStack(Material.GRAY_STAINED_GLASS_PANE, " "));
+      displayRecipes.add(CustomItemStack.create(Material.GRAY_STAINED_GLASS_PANE, " "));
       displayRecipes.add(recipe.getFirstItemOutput());
     });
     return displayRecipes;
@@ -309,7 +310,7 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
       } else {
         for (ItemStack stack : result) {
           if (SlimefunUtils.isItemSimilar(itemInSlot, stack, false, false)
-              && itemInSlot.getAmount() < itemInSlot.getMaxStackSize()) {
+                  && itemInSlot.getAmount() < itemInSlot.getMaxStackSize()) {
             availableSpace++;
             break;
           }
@@ -472,10 +473,10 @@ public class GenericMachine extends AContainer implements NotHopperable, RecipeD
   }
 
   private ItemStack getDisplayOrInfo(ItemStack itemStack, String name) {
-    return new CustomItemStack(itemStack != null ? itemStack : new ItemStack(Material.BLACK_STAINED_GLASS_PANE), name);
+    return CustomItemStack.create(itemStack != null ? itemStack : new ItemStack(Material.BLACK_STAINED_GLASS_PANE), name);
   }
 
   private ItemStack getDisplayOrWarn(ItemStack itemStack, String name) {
-    return new CustomItemStack(itemStack != null ? itemStack : new ItemStack(Material.RED_STAINED_GLASS_PANE), name);
+    return CustomItemStack.create(itemStack != null ? itemStack : new ItemStack(Material.RED_STAINED_GLASS_PANE), name);
   }
 }

@@ -1,20 +1,12 @@
 package com.github.relativobr.supreme;
 
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.loadComponents;
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.loadCoreResource;
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.loadGear;
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.loadGenerators;
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.loadMachines;
-
 import com.github.relativobr.supreme.setup.MainSetup;
-import com.github.relativobr.supreme.util.CompatibilySupremeLegacyItem;
 import com.github.relativobr.supreme.util.SupremeOptions;
 import com.github.relativobr.supreme.util.SupremePowerSection;
-import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.BlobBuildUpdater;
-import java.util.ArrayList;
-import java.util.List;
+import io.github.thebusybiscuit.slimefun5.api.SlimefunAddon;
+import io.github.thebusybiscuit.slimefun5.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun5.libraries.dough.config.Config;
+import io.github.thebusybiscuit.slimefun5.libraries.dough.updater.BlobBuildUpdater;
 import java.util.logging.Level;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,7 +17,6 @@ public class Supreme extends JavaPlugin implements SlimefunAddon {
   private static SupremeOptions supremeOptions = null;
   private static SupremePowerSection supremePowerSection = null;
   private static SupremeLocalization localization = null;
-  private static List<CompatibilySupremeLegacyItem> legacyItem = null;
 
   public static Supreme inst() {
     return instance;
@@ -40,7 +31,7 @@ public class Supreme extends JavaPlugin implements SlimefunAddon {
         supremeOptions = SupremeOptions.builder()
                 .autoUpdate(typeSection.getBoolean("auto-update", true))
                 .useLegacySupremeexpansionItemId(
-                    typeSection.getBoolean("use-legacy-supremeexpansion-item-id", false))
+                        typeSection.getBoolean("use-legacy-supremeexpansion-item-id", false))
                 .lang(typeSection.getString("lang", "en-US"))
                 .customTickerDelay(typeSection.getInt("custom-ticker-delay", 2))
                 .enableGenerators(typeSection.getBoolean("enable-generators", true))
@@ -117,20 +108,6 @@ public class Supreme extends JavaPlugin implements SlimefunAddon {
     return localization;
   }
 
-  public static List<CompatibilySupremeLegacyItem> getLegacyItem() {
-    if (legacyItem == null || legacyItem.isEmpty()) {
-      if (legacyItem == null) {
-        legacyItem = new ArrayList<>();
-      }
-      loadComponents(legacyItem);
-      loadGear(legacyItem);
-      loadGenerators(legacyItem);
-      loadMachines(legacyItem);
-      loadCoreResource(legacyItem);
-    }
-    return legacyItem;
-  }
-
   @Override
   public void onEnable() {
 
@@ -147,8 +124,8 @@ public class Supreme extends JavaPlugin implements SlimefunAddon {
       return;
     }
 
-		var autoUpdate = getSupremeOptions().isAutoUpdate() && getDescription().getVersion().startsWith("Dev");
-		Supreme.inst().log(Level.INFO, "auto-update: " + autoUpdate);
+    var autoUpdate = getSupremeOptions().isAutoUpdate() && getDescription().getVersion().startsWith("Dev");
+    Supreme.inst().log(Level.INFO, "auto-update: " + autoUpdate);
     if (autoUpdate) {
       new BlobBuildUpdater(this, getFile(), "Supreme", "Dev").start();
     }
@@ -157,15 +134,9 @@ public class Supreme extends JavaPlugin implements SlimefunAddon {
     Supreme.inst().log(Level.INFO, "Loaded language Supreme: " + getSupremeOptions().getLang());
     getLocalization();
 
-    // check Compatibily Legacy (SupremeExpansion)
-    if (getSupremeOptions().isUseLegacySupremeexpansionItemId()) {
-      Supreme.inst().log(Level.INFO, "Legacy SupremeExpansion IDs: enable");
-      getLegacyItem();
-    } else {
-      Supreme.inst().log(Level.INFO, "Legacy SupremeExpansion IDs: disable");
-    }
-
     MainSetup.setup(this);
+
+    Slimefun.getItemTranslationService().registerTranslations(this);
 
   }
 

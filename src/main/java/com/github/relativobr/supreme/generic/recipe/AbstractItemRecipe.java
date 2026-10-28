@@ -1,5 +1,6 @@
 package com.github.relativobr.supreme.generic.recipe;
 
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -145,6 +146,17 @@ public class AbstractItemRecipe {
   public AbstractItemRecipe(@Nonnull Material input1, Material input2, @Nonnull ItemStack output1, ItemStack output2) {
     this.input = new ItemStack[]{new ItemStack(input1), (input2 == null) ? null : new ItemStack(input2)};
     this.output = new ItemStack[]{output1, output2};
+  }
+  public AbstractItemRecipe(@Nonnull ItemStack[] input, @Nonnull SlimefunItemStack output) {
+    this(input, output.item());
+  }
+
+  public AbstractItemRecipe(@Nonnull SlimefunItemStack input, @Nonnull ItemStack output) {
+    this(input.item(), output);
+  }
+
+  public AbstractItemRecipe(@Nonnull SlimefunItemStack input, @Nonnull SlimefunItemStack output) {
+    this(input.item(), output.item());
   }
 
 }

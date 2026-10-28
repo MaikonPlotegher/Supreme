@@ -17,12 +17,12 @@ public class UtilEnergy {
 
   @Nonnull
   public static String energyCapacity(Integer energy) {
-    return "&8⇨ &e⚡ &7" + ((energy == null) ? "Infinite" : format((double) energy)) + " J Capacity";
+    return "&8⇨  &7" + ((energy == null) ? "Infinite" : format((double) energy)) + " J Capacity";
   }
 
   @Nonnull
   public static String energyBuffer(Integer energy) {
-    return "&8⇨ &e⚡ &7" + ((energy == null) ? "Infinite" : format((double) energy)) + " J Buffer";
+    return "&8⇨  &7" + ((energy == null) ? "Infinite" : format((double) energy)) + " J Buffer";
   }
 
   @Nonnull

@@ -1,7 +1,7 @@
 package com.github.relativobr.supreme.util;
 
 import com.github.relativobr.supreme.Supreme;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItemStack;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -13,8 +13,6 @@ import org.bukkit.potion.PotionEffectType;
 import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.logging.Level;
-
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.getNewIdSupremeLegacy;
 
 public class EnchantsAndEffectsUtil {
 
@@ -44,7 +42,7 @@ public class EnchantsAndEffectsUtil {
             lore.add(ChatColor.AQUA + "Soulbound");
 
             // find path
-            String itemPath = getNewIdSupremeLegacy(item.getItemId()).toLowerCase();
+            String itemPath = item.getItemId().toLowerCase();
 
             buildLoreEffects(lore, itemPath);
 
@@ -93,7 +91,7 @@ public class EnchantsAndEffectsUtil {
             lore.add(ChatColor.AQUA + "Soulbound");
 
             // find path
-            String itemPath = getNewIdSupremeLegacy(item.getItemId()).toLowerCase();
+            String itemPath = item.getItemId().toLowerCase();
 
             meta.setLore(lore);
 
@@ -147,7 +145,7 @@ public class EnchantsAndEffectsUtil {
         }
 
         // find path
-        String itemPath = getNewIdSupremeLegacy(item.getItemId()).toLowerCase();
+        String itemPath = item.getItemId().toLowerCase();
 
         // ignore basic armor effects
         if (itemPath.contains("adamantium")

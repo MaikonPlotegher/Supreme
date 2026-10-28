@@ -7,22 +7,22 @@ import com.github.relativobr.supreme.util.SupremeQuarryOutput;
 import com.github.relativobr.supreme.util.ItemUtil;
 import com.github.relativobr.supreme.util.UtilEnergy;
 import com.github.relativobr.supreme.util.UtilMachine;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.ItemState;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
-import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
-import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetComponent;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
-import io.github.thebusybiscuit.slimefun4.core.networks.energy.EnergyNetComponentType;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.Validate;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import io.github.thebusybiscuit.slimefun4.utils.ChestMenuUtils;
-import io.github.thebusybiscuit.slimefun4.utils.LoreBuilder;
-import io.github.thebusybiscuit.slimefun4.utils.tags.SlimefunTag;
+import io.github.thebusybiscuit.slimefun5.api.items.ItemGroup;
+import io.github.thebusybiscuit.slimefun5.api.items.ItemState;
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun5.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun5.core.attributes.EnergyNetComponent;
+import io.github.thebusybiscuit.slimefun5.core.handlers.BlockPlaceHandler;
+import io.github.thebusybiscuit.slimefun5.core.handlers.BlockUseHandler;
+import io.github.thebusybiscuit.slimefun5.core.networks.energy.EnergyNetComponentType;
+import io.github.thebusybiscuit.slimefun5.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun5.libraries.commons.lang.Validate;
+import io.github.thebusybiscuit.slimefun5.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun5.libraries.dough.protection.Interaction;
+import io.github.thebusybiscuit.slimefun5.utils.ChestMenuUtils;
+import io.github.thebusybiscuit.slimefun5.utils.LoreBuilder;
+import io.github.thebusybiscuit.slimefun5.utils.tags.SlimefunTag;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -111,7 +111,7 @@ public class AbstractQuarry extends SlimefunItem implements EnergyNetComponent {
           inv.addItem(itemStack);
           if (effect) {
             Location loc = b.getLocation().add(0.5, 0.8, 0.5);
-            b.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc, 6);
+            b.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc, 6);
           }
           removeCharge(b.getLocation(), getEnergyConsumption());
           energyCharge = getCharge(b.getLocation());
@@ -172,16 +172,16 @@ public class AbstractQuarry extends SlimefunItem implements EnergyNetComponent {
     final String infoSpeed = UtilEnergy.timePerItem((getSupremeOptions().getCustomTickerDelay() * delaySpeed) / 2);
     if (energyCharge < getEnergyConsumption() || !this.enabled) {
       menu.addItem(InventoryRecipe.QUARRY_STATUS,
-          new CustomItemStack(Material.OBSIDIAN, ChatColor.RED + "NOT-ACTIVE", powerPerSecond, powerCharged,
+          CustomItemStack.create(Material.OBSIDIAN, ChatColor.RED + "NOT-ACTIVE", powerPerSecond, powerCharged,
               infoSpeed));
       menu.addMenuClickHandler(InventoryRecipe.QUARRY_STATUS, ChestMenuUtils.getEmptyClickHandler());
     } else {
       menu.addItem(InventoryRecipe.QUARRY_STATUS,
-          new CustomItemStack(Material.GLOWSTONE, ChatColor.GREEN + "ACTIVE", powerPerSecond, powerCharged, infoSpeed));
+          CustomItemStack.create(Material.GLOWSTONE, ChatColor.GREEN + "ACTIVE", powerPerSecond, powerCharged, infoSpeed));
       menu.addMenuClickHandler(InventoryRecipe.QUARRY_STATUS, ChestMenuUtils.getEmptyClickHandler());
     }
     if (enabled) {
-      menu.addItem(InventoryRecipe.QUARRY_BUTTON, new CustomItemStack(Material.EMERALD_BLOCK,
+      menu.addItem(InventoryRecipe.QUARRY_BUTTON, CustomItemStack.create(Material.EMERALD_BLOCK,
           Slimefun.getLocalization().getMessages(p, "messages.auto-crafting.tooltips.enabled")));
       menu.addMenuClickHandler(InventoryRecipe.QUARRY_BUTTON, (pl, item, slot, action) -> {
         enabled = false;
@@ -189,7 +189,7 @@ public class AbstractQuarry extends SlimefunItem implements EnergyNetComponent {
         return false;
       });
     } else {
-      menu.addItem(InventoryRecipe.QUARRY_BUTTON, new CustomItemStack(Material.REDSTONE_BLOCK,
+      menu.addItem(InventoryRecipe.QUARRY_BUTTON, CustomItemStack.create(Material.REDSTONE_BLOCK,
           Slimefun.getLocalization().getMessages(p, "messages.auto-crafting.tooltips.disabled")));
       menu.addMenuClickHandler(InventoryRecipe.QUARRY_BUTTON, (pl, item, slot, action) -> {
         enabled = true;

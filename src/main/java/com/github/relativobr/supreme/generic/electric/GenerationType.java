@@ -46,9 +46,16 @@ public enum GenerationType {
     WATER("Water") {
         @Override
         protected int generate(@Nonnull World world, @Nonnull Block block, int def) {
-            Material material = block.getLocation().add(0, -1, 0).getBlock().getType();
+            Block below = block.getRelative(0, -1, 0);
+            Material material = below.getType();
             if (material == Material.WATER
-                    || material == Material.WATER_CAULDRON) {
+                    || material == Material.WATER_CAULDRON
+                    || material == Material.BUBBLE_COLUMN
+                    || material == Material.KELP
+                    || material == Material.KELP_PLANT
+                    || material == Material.SEAGRASS
+                    || material == Material.TALL_SEAGRASS
+                    || (below.getBlockData() instanceof org.bukkit.block.data.Waterlogged w && w.isWaterlogged())) {
                 return def;
             }
             return 0;

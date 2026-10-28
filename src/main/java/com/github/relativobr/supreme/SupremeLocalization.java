@@ -4,13 +4,14 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import net.guizhanss.guizhanlib.common.utils.StringUtil;
+import net.guizhanss.guizhanlib.minecraft.utils.ChatUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+
 import net.guizhanss.guizhanlib.localization.Localization;
-import net.guizhanss.guizhanlib.utils.ChatUtil;
-import net.guizhanss.guizhanlib.utils.StringUtil;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
-import io.github.thebusybiscuit.slimefun4.libraries.commons.lang.Validate;
+import io.github.thebusybiscuit.slimefun5.libraries.commons.lang.Validate;
 import org.bukkit.entity.Player;
 
 public class SupremeLocalization extends Localization {
@@ -65,11 +66,11 @@ public class SupremeLocalization extends Localization {
   public void sendActionbarMessage(Player p, String messageKey, Object... args) {
     Validate.notNull(p, "Player cannot be null");
     Validate.notNull(messageKey, "Message key cannot be null");
-
     String message = MessageFormat.format(getString("messages." + messageKey), args);
+    String coloredMessage = ChatUtil.color(message);
 
-    BaseComponent[] components = TextComponent.fromLegacyText(ChatUtil.color(message));
-    p.spigot().sendMessage(ChatMessageType.ACTION_BAR, components);
+    Component component = LegacyComponentSerializer.legacySection().deserialize(coloredMessage);
+    p.sendActionBar(component);
   }
 
 }

@@ -4,10 +4,10 @@ import com.github.relativobr.supreme.Supreme;
 import com.github.relativobr.supreme.machine.AbstractQuarry;
 import com.github.relativobr.supreme.machine.AbstractQuarryOutputItem;
 import com.github.relativobr.supreme.machine.tech.MobTechGeneric;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
-import io.github.thebusybiscuit.slimefun4.core.attributes.Radioactivity;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.data.persistent.PersistentDataAPI;
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun5.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun5.core.attributes.Radioactivity;
+import io.github.thebusybiscuit.slimefun5.libraries.dough.data.persistent.PersistentDataAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -25,8 +25,6 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import static com.github.relativobr.supreme.Supreme.getSupremeOptions;
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.getNewIdSupremeLegacy;
-import static com.github.relativobr.supreme.util.CompatibilySupremeLegacy.getOldIdSupremeLegacy;
 
 public class ItemUtil {
 
@@ -47,7 +45,7 @@ public class ItemUtil {
         }
 
         // find path
-        String itemPath = getNewIdSupremeLegacy(item.getItemId()).toLowerCase();
+        String itemPath = item.getItemId().toLowerCase();
         ConfigurationSection itemSection = typeSection.getConfigurationSection(itemPath);
 
         List<AbstractQuarryOutputItem> outputItems = new ArrayList<>();
@@ -70,7 +68,7 @@ public class ItemUtil {
                     SlimefunItem slimefunItem = SlimefunItem.getById(itemId);
                     //check Legacy Supreme
                     if (slimefunItem == null && getSupremeOptions().isUseLegacySupremeexpansionItemId()) {
-                        slimefunItem = SlimefunItem.getById(getOldIdSupremeLegacy(itemId));
+                        slimefunItem = SlimefunItem.getById(itemId);
                     }
                     if (slimefunItem != null) {
                         outputItems.add(
